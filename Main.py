@@ -33,7 +33,7 @@ footer = { #text at the end of the post. !normal is the default, !no_link is wit
 }
 
 def check_condition(c): #The condition for the bot. If this is true, the bot will comment.
-    return (c.body.lower().rstrip('?').rstrip('!').rstrip('‽').rstrip('.').rstrip(',').rstrip(';'). in Triggers) and (not RateLimit(str(c.author))) #Is the comment a trigger, and is the author not rate limited. Each .rstrip('‽') adds support to different punctuation.
+    return (c.body.lower().rstrip('?').rstrip('!').rstrip('‽').rstrip('.').rstrip(',').rstrip(';') in Triggers) and (not RateLimit(str(c.author))) #Is the comment a trigger, and is the author not rate limited. Each .rstrip('‽') adds support to different punctuation.
 
 def bot_action(c,r): #Action the bot preforms
     global users
