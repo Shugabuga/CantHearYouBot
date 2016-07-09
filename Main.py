@@ -1,10 +1,11 @@
 #Made by /u/sagiksp
 #Modified by HeyItsShuga and Cth1003 (added more triggers + comments)
 
-username="CantHearYouBotEX" #BOTS NAME
-password="the-password-is-on-reddit" #BOTS PASSWORD
-creator_name="HeyItsShuga" #YOUR NAME (WITHOUT THE /U/)
-bot_subreddit="CantHearYouBotEX" #BOTS SUBREDDIT
+username="" #BOTS NAME
+password="" #BOTS PASSWORD
+creator_name="" #YOUR NAME (WITHOUT THE /U/)
+bot_subreddit="" #BOTS SUBREDDIT
+
 
 import praw, time, re #Imports needed modules for bot to run.
 
@@ -12,24 +13,30 @@ import praw, time, re #Imports needed modules for bot to run.
 
 user_agent="Cant Hear You by /u/"+creator_name #The name the bot will use to communicate with reddit.
 users = [] #People that have been yelled at. Format: [[Username,UTC_Time],[Username,UTC_Time],...]
-banned_users = ["TheWutBot", "TheWallGrows","AutoModerator", "CantHearYouBot2"] #Other bots and people who hate this bot.
-Triggers = ('what', 'wut', 'wat', 'wot','what did you said','wat did u said') #Text that triggers the bot.
+banned_users = ["TheWutBot", "TheWallGrows","AutoModerator", "CantHearYouBot2", "CantHearYouBot", "SubredditMetadataBot"] #Other bots and people who hate this bot.
+Triggers = ('what', 'wut', 'wat', 'wot','what did you said','wat did u said', 'what was that again', 'wat did u say', 'wat did you say', 'what did you say','wat did u say' ) #Text that triggers the bot.
 no_link_subs = ("ImGoingToHellForThis") #Subs that have asked me not to link to the subreddit
-pony_subs = ("mylittlepony", "mlplounge", "clopclop", "ploungeafterdark", "heyitsshugatest") #Subs that are for bronies.
-bot_rights = ("botsrights", "botwatch") #Subs that are for people who love bots.
 
-footer = { #text at the end of the post. !normal is the default, !no_link is without links, !pony is for pony subs, !botsrights is for botsrights subs, and the rest are for custom subs
-"!normal":"***\n\n##[^^^(I&#32;am&#32;a&#32;bot,&#32;and&#32;I&#32;don't&#32;respond&#32;to&#32;myself.)](https://np.reddit.com/r/"+bot_subreddit+"/)",
+footer = { #text at the end of the post. !normal is the default, !no_link is without links and the rest are for custom subs
+"!normal":"***\n\n##[^^^(I&#32;am&#32;a&#32;bot,&#32;and&#32;I&#32;don't&#32;respond&#32;to&#32;myself.)](http://http://illumineighti.tk/#https://np.reddit.com/r/"+bot_subreddit+"/)",
 
 "!no_link":"***\n\n^^^(I&#32;am&#32;a&#32;bot,&#32;and&#32;I&#32;don't&#32;respond&#32;to&#32;myself.)",
 
-"totallynotrobots":"***\n\n##[^^^HELLO ^^^FELLOW ^^^HUMANS! ^^^I ^^^AM ^^^A ^^^~~bot~~HUMAN ^^^TOO, ^^^AND ^^^I ^^^DON'T ^^^RESPOND ^^^TO ^^^MYSELF.](https://np.reddit.com/r/"+bot_subreddit+"/)",
+"totallynotrobots":"***\n\n##[^^^HELLO ^^^FELLOW ^^^HUMANS! ^^^I ^^^AM ^^^A ^^^~~bot~~HUMAN ^^^TOO, ^^^AND ^^^I ^^^DON'T ^^^RESPOND ^^^TO ^^^MYSELF.](http://illumineighti.tk/#https://np.reddit.com/r/"+bot_subreddit+"/)",
 
-"!pony":"***\n\n##[^^^(Hello&#32;everypony!&#32;I&#32;am&#32;a&#32;bot,&#32;and&#32;I&#32;don't&#32;respond&#32;to&#32;myself.)](https://np.reddit.com/r/"+bot_subreddit+"/)",
+"mylittlepony":"***\n\n##[^^^(Hello&#32;everypony!&#32;I&#32;am&#32;a&#32;bot,&#32;and&#32;I&#32;don't&#32;respond&#32;to&#32;myself.)](http://illumineighti.tk/#https://np.reddit.com/r/"+bot_subreddit+"/)",
 
-"!botsrights":"***\n\n##[^^^(Hello&#32;bot&#32;right&#32;activists!I&#32;am&#32;a&#32;bot,&#32;and&#32;I&#32;don't&#32;respond&#32;to&#32;myself.)](https://np.reddit.com/r/"+bot_subreddit+"/)",
+"mlplounge":"***\n\n##[^^^(Hello&#32;everypony!&#32;I&#32;am&#32;a&#32;bot,&#32;and&#32;I&#32;don't&#32;respond&#32;to&#32;myself.)](http://illumineighti.tk/#https://np.reddit.com/r/"+bot_subreddit+"/)",
 
-"undertale":"***\n\n##[^^^(hOI!!!&#32;iM&#32;A&#32;bOT!&#32;i&#32;dOnT&#32;rESpOND&#32;tO&#32;mYSElF.)](https://np.reddit.com/r/"+bot_subreddit+"/)"
+"ponk":"***\n\n##[^^^(Hello&#32;everypony!&#32;I&#32;am&#32;a&#32;bot,&#32;and&#32;I&#32;don't&#32;respond&#32;to&#32;myself.)](http://illumineighti.tk/#https://np.reddit.com/r/"+bot_subreddit+"/)",
+
+"ploungeafterdark":"***\n\n##[^^^(Hello&#32;everypony!&#32;I&#32;am&#32;a&#32;bot,&#32;and&#32;I&#32;don't&#32;respond&#32;to&#32;myself.)](http://illumineighti.tk/#https://np.reddit.com/r/"+bot_subreddit+"/)",
+
+"clopclop":"***\n\n##[^^^(Hello&#32;everypony!&#32;I&#32;am&#32;a&#32;bot,&#32;and&#32;I&#32;don't&#32;respond&#32;to&#32;myself.)](http://illumineighti.tk/#https://np.reddit.com/r/"+bot_subreddit+"/)",
+
+"botsrights":"***\n\n##[^^^(Hello&#32;bot&#32;right&#32;activists!I&#32;am&#32;a&#32;bot,&#32;and&#32;I&#32;don't&#32;respond&#32;to&#32;myself.)](http://illumineighti.tk/#https://np.reddit.com/r/"+bot_subreddit+"/)",
+
+"undertale":"***\n\n##[^^^(hOI!!!&#32;iM&#32;A&#32;bOT!&#32;i&#32;dOnT&#32;rESpOND&#32;tO&#32;mYSElF.)](http://illumineighti.tk/#https://np.reddit.com/r/"+bot_subreddit+"/)"
 }
 
 def check_condition(c): #The condition for the bot. If this is true, the bot will comment.
@@ -44,7 +51,7 @@ def bot_action(c,r): #Action the bot preforms
     if isNotAValidComment(parent): return #If it is a response to a thread, stop.
     subreddit = str(c.subreddit)
 
-    if str(parent.author) == username and parent.body != "In da but": #If parent is bot and comment is not "in da but"
+    if str(parent.author) == username and parent.body != "In da butt": #If parent is bot and comment is not "in da butt"
         return
 
     users.append([str(c.author),c.created_utc]) #Add username and time of use to the users list
@@ -52,7 +59,7 @@ def bot_action(c,r): #Action the bot preforms
 
     if check_condition(parent): #If both comments are triggers, ie. What What
         try:
-            c.reply("In da but")
+            c.reply("In da butt")
         except:
             pass
         return
@@ -89,10 +96,6 @@ def get_footer(subreddit): #gets footer via subreddit name
     ft = ""
     if subreddit in no_link_subs:
         ft = footer["!no_link"]
-    elif subreddit in pony_subs:
-        ft = footer["!pony"]
-    elif subreddit in bots_rights:
-        ft = footer["!botsrights"]
     elif subreddit in footer:
         ft = footer[subreddit]
     else:
